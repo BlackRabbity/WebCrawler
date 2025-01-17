@@ -1,6 +1,6 @@
-def print_hi(name):
-    print(f'Hi, {name}')
-
+from crawler import Crawler
 
 if __name__ == '__main__':
-    print_hi('PyCharm')
+    url = input("Enter your url: ")
+    crawler = Crawler(url, 2)
+    crawler.crawl()
