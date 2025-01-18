@@ -31,11 +31,14 @@ class Crawler:
                 path = urljoin(url, path)
             yield path
 
-    def BFS(self):
+    def bfs_dfs_search(self, is_dfs):
         q = [(self.start_url, 0)]
         self.visited.add(self.start_url)
         while q:
-            curr, curr_depth = q.pop(0)
+            if is_dfs:
+                curr, curr_depth = q.pop()
+            else:
+                curr, curr_depth = q.pop(0)
 
             if self.depth < curr_depth:
                 continue
@@ -50,6 +53,8 @@ class Crawler:
                     self.visited.add(link)
                     q.append((link, curr_depth + 1))
                     self.tree.add_edge(curr, link)
+
+
 
     def print_tree(self):
         pos = nx.spring_layout(self.tree)
@@ -68,7 +73,5 @@ class Crawler:
         plt.show()
 
     def crawl(self):
-        self.BFS()
-        #for url in self.get_linked_urls(self.start_url, html):
-        #    self.tree.add_edge(self.start_url, url)
+        self.bfs_dfs_search(False)
         self.print_tree()
