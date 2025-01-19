@@ -14,7 +14,7 @@ from threading import Lock
 
 class Crawler:
 
-    def __init__(self, start_url, depth, time_limit):
+    def __init__(self, start_url, depth, time_limit, is_dfs):
         self.depth = depth
         self.tree = nx.DiGraph()
         self.start_url = start_url
@@ -24,6 +24,7 @@ class Crawler:
         self.max_threads = 10
         self.webs_content = [{"url": "URL", "text": "Extracted Text"}]
         self.lock = Lock()
+        self.is_dfs = is_dfs
         #self.session = self.set_tor_proxy()
 
     '''
@@ -84,14 +85,14 @@ class Crawler:
             for obj in self.webs_content:
                 writer.writerow([obj['url'], obj['text']])
 
-    def bfs_dfs_search(self, is_dfs):
+    def bfs_dfs_search(self):
         q = [(self.start_url, 0)]
         self.visited.add(self.start_url)
         with ThreadPoolExecutor(max_workers=self.max_threads) as executor:
             futures = []
             while (q or futures) and not self.is_time_up():
                 while q and len(futures) < self.max_threads:
-                    if is_dfs:
+                    if self.is_dfs:
                         curr, curr_depth = q.pop()
                     else:
                         curr, curr_depth = q.pop(0)
@@ -140,6 +141,6 @@ class Crawler:
         net.show("graph.html", notebook=False)
 
     def crawl(self):
-        self.bfs_dfs_search(False)
+        self.bfs_dfs_search()
         self.print_tree()
         self.save_to_csv("crawl.csv")
