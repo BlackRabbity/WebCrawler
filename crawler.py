@@ -14,14 +14,14 @@ from threading import Lock
 
 class Crawler:
 
-    def __init__(self, start_url, depth, time_limit, is_dfs):
+    def __init__(self, start_url, depth, time_limit, is_dfs, max_threads):
         self.depth = depth
         self.tree = nx.DiGraph()
         self.start_url = start_url
         self.visited = set()
         self.time_limit = time_limit
         self.start_time = time.time()
-        self.max_threads = 3
+        self.max_threads = max_threads
         self.webs_content = [{"url": "URL", "text": "Extracted Text"}]
         self.lock = Lock()
         self.is_dfs = is_dfs
