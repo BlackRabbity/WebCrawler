@@ -26,6 +26,7 @@ class Crawler:
         self.lock = Lock()
         #self.session = self.set_tor_proxy()
 
+    '''
     def set_tor_proxy(self):
         session = requests.Session()
         session.proxies = {
@@ -39,6 +40,7 @@ class Crawler:
         with Controller.from_port(port=9051) as controller:
             controller.authenticate()
             controller.signal(Signal.NEWNYM)
+    '''
 
     def fetch_url(self, url):
         print(f"Fetching: {url}")
