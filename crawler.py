@@ -21,7 +21,7 @@ class Crawler:
         self.visited = set()
         self.time_limit = time_limit
         self.start_time = time.time()
-        self.max_threads = 10
+        self.max_threads = 3
         self.webs_content = [{"url": "URL", "text": "Extracted Text"}]
         self.lock = Lock()
         self.is_dfs = is_dfs
